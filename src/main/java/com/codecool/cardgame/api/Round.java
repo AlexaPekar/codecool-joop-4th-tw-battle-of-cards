@@ -6,7 +6,7 @@ public interface Round {
     Card getPlayer2Card();
     void setPlayer1Card();
     void setPlayer2Card();
-    Player getWinner();
-    void decreaseHP();
+    PlayerImpl getWinner();
+    void decreaseHp();
     
 }
