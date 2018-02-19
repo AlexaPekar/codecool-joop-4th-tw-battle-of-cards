@@ -12,7 +12,7 @@ public class Card{
         this.damage = damage;
         this.defense = defense;
     }
-    
+
     public String getName() {
         return name;
     }

@@ -46,6 +46,7 @@ public class RoundImpl implements Round {
 
     @Override
     public void decreaseHP(Player player , int damage) {
-
+        player.decreaseHp(damage);
     }
+
 }
