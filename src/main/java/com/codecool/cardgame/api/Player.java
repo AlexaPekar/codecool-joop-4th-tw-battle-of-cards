@@ -16,11 +16,17 @@ public interface Player {
 
     public void decreaseHp(int hp);
 
+    public int getMp();
+
+    public void increaseMp(int mp);
+
+    public void decreaseMp(int mp);
+
     public void pickCard();
 
-    public Card chooseCard(String name);
+    public void chooseCard(String name);
 
-    public int chooseAttribute(Card card, String attribute);
+    public int chooseAttribute(FighterCard card, String attribute);
 
     public void fillDeck();
 }
