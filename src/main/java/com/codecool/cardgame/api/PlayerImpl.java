@@ -32,7 +32,7 @@ public class PlayerImpl implements Player {
         return hand;
     }
 
-    public Card getChosenCard() {
+    public FighterCard getChosenCard() {
         return chosenCard;
     }
 
