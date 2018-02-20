@@ -22,7 +22,7 @@ public class CsvParser {
                     FighterCard fighterCard = new FighterCard(card[0], card[1], Integer.parseInt(card[3]), Integer.parseInt(card[4]), Integer.parseInt(card[5]));
                     deck.add(fighterCard);
                 } else {
-                    SpellCard spellCard = new SpellCard(card[1], card[2], card[3]);
+                    SpellCard spellCard = new SpellCard(card[0], card[1], card[2]);
                     deck.add(spellCard);
                 }
             }
