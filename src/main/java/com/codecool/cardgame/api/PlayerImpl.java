@@ -7,13 +7,17 @@ public class PlayerImpl implements Player {
     private String name;
     private List<Card> deck;
     private List<Card> hand;
+    private FighterCard chosenCard;
     private int hp;
+    private int mp;
 
     public PlayerImpl(String name, List<Card> deck, List<Card> hand) {
         this.name = name;
         this.deck = deck;
         this.hand = hand;
+        chosenCard = null;
         this.hp = 10000;
+        this.mp = 10;
     }
 
     public String getName() {
@@ -28,6 +32,10 @@ public class PlayerImpl implements Player {
         return hand;
     }
 
+    public Card getChosenCard() {
+        return chosenCard;
+    }
+
     public int getHp() {
         return hp;
     }
@@ -40,22 +48,34 @@ public class PlayerImpl implements Player {
         this.hp -= hp;
     }
 
+    @Override
+    public int getMp() {
+        return mp;
+    }
+
+    @Override
+    public void increaseMp(int mp) {
+        this.mp += mp;
+    }
+
+    @Override
+    public void decreaseMp(int mp) {
+        this.mp -= mp;
+    }
+
     public void pickCard() {
         hand.add(deck.get(0));
         deck.remove(deck.get(0));
     }
 
-    public Card chooseCard(String name) {
-        Card chosenCard = null;
-        for (Card card:hand) {
+    public void chooseCard(String name) {
+        for (Card card : hand) {
             if (card.getName().equals(name)) {
-                chosenCard = card;
+                chosenCard = (FighterCard) card;
             }
         }
-        return chosenCard;
     }
-
-    public int chooseAttribute(Card card,String attribute) {
+    public int chooseAttribute(FighterCard card,String attribute) {
         int attributeValue = 0;
         if (attribute.equals("Damage")) {
             attributeValue = card.getDamage();
