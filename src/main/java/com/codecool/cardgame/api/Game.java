@@ -1,6 +1,6 @@
 package com.codecool.cardgame.api;
 
-public interface Round {
+public interface Game {
 
     Player getPlayer1();
     Player getPlayer2();
