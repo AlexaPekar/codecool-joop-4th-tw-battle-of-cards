@@ -1,18 +1,17 @@
 package com.codecool.cardgame.api;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CsvParser {
-        String line = "";
-        String csvFile;
-        List<Card> deck = new ArrayList<Card>();
+        private String line = "";
+        private String csvFile;
+        private List<Card> deck = new ArrayList<Card>();
 
-    public List<Card> getCardsFromCsv(String filepath) throws IOException {
+    public List<Card> getCardsFromCsv() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("../data/" + csvFile));
             while ((line = br.readLine()) != null) {
                 String[] card = line.split(",");
