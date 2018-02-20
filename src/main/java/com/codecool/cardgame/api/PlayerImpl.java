@@ -91,9 +91,21 @@ public class PlayerImpl implements Player {
 
     public void fillDeck() throws IOException {
         CsvParser csvParser = new CsvParser();
-        deck = csvParser.getCardsFromCsv();
+        deck = csvParser.getCardsFromCsv("cards.csv");
         Collections.shuffle(deck);
 
 
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerImpl{" +
+                "name='" + name + '\'' +
+                ", deck=" + deck +
+                ", hand=" + hand +
+                ", chosenCard=" + chosenCard +
+                ", hp=" + hp +
+                ", mp=" + mp +
+                '}';
     }
 }

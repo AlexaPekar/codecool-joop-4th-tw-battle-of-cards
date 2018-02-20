@@ -8,11 +8,10 @@ import java.util.List;
 
 public class CsvParser {
         private String line = "";
-        private String csvFile;
         private List<Card> deck = new ArrayList<Card>();
 
-    public List<Card> getCardsFromCsv() throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("../data/" + csvFile));
+    public List<Card> getCardsFromCsv(String path) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(path));
             while ((line = br.readLine()) != null) {
                 String[] card = line.split(",");
                 if (card[1].equals("Fighter")) {
