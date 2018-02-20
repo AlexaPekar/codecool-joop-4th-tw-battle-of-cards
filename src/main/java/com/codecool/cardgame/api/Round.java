@@ -2,11 +2,11 @@ package com.codecool.cardgame.api;
 
 public interface Round {
 
-    Card getPlayer1Card();
-    Card getPlayer2Card();
+    Player getPlayer1();
+    Player getPlayer2();
     String getChosenAttribute();
-    void setPlayer1Card(Card card);
-    void setPlayer2Card(Card card);
+    void setPlayer1(Player player);
+    void setPlayer2(Player player);
     void setChosenAttribute(String attribute);
     Player getWinner();
     void decreaseHP(Player player, int damage);
