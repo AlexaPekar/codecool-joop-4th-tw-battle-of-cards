@@ -3,11 +3,11 @@ package com.codecool.cardgame.api;
 import java.util.List;
 import java.util.Scanner;
 
-public class SpellCard extends Card{
+public class SpellCard extends Card {
     private String effect;
 
-    public SpellCard(String name,String type, String effect) {
-        super(name,type);
+    public SpellCard(String name, String type, String effect) {
+        super(name, type);
         this.effect = effect;
     }
 
@@ -27,18 +27,13 @@ public class SpellCard extends Card{
         player.getChosenCard().increaseIntelligence(10);
     }
 
-    public void increaseDamage(Player player) {
+    public void increaseDefense(Player player) {
         player.getChosenCard().increaseDefense(10);
     }
 
-    public void returnFromGraveyard(Player player, List<Card> graveYard,String revivedCard) {
-        for (Card card:graveYard) {
-            if (card.getName().equals(revivedCard)) {
-                player.getHand().add(card);
-                graveYard.remove(card);
-            }
-        }
+    public void returnFromGraveyard(Player player, List<Card> graveYard) {
+        player.getHand().add(graveYard.get(0));
+        graveYard.remove(graveYard.get(0));
 
     }
-
 }
