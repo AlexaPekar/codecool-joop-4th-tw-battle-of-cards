@@ -21,6 +21,8 @@ public interface Player {
 
     public FighterCard getChosenCard();
 
+    public SpellCard getChosenSpell();
+
     public void increaseMp(int mp);
 
     public void decreaseMp(int mp);
@@ -28,6 +30,8 @@ public interface Player {
     public void pickCard();
 
     public void chooseCard(String name);
+
+    public void chooseSpellCard(String name);
 
     public int chooseAttribute(FighterCard card, String attribute);
 
