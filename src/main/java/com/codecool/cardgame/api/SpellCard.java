@@ -19,10 +19,6 @@ public class SpellCard extends Card{
         player.increaseHp(1000);
     }
 
-    public void decreaseHp(Player player) {
-        player.decreaseHp(1000);
-    }
-
     public void increaseDmg(Player player) {
         player.getChosenCard().increaseDamage(100);
     }
@@ -44,4 +40,5 @@ public class SpellCard extends Card{
         }
 
     }
+
 }
