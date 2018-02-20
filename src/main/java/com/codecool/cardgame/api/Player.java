@@ -18,7 +18,7 @@ public interface Player {
 
     public int getMp();
 
-    public Card getChosenCard();
+    public FighterCard getChosenCard();
 
     public void increaseMp(int mp);
 
