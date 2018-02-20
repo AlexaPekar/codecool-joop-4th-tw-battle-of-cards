@@ -1,12 +1,15 @@
 package com.codecool.cardgame.api;
 
 public class FighterCard extends Card {
-    int intelligence;
-    int damage;
-    int defense;
+    private int intelligence;
+    private int damage;
+    private int defense;
 
     public FighterCard(String name,String type, int intelligence, int damage, int defense) {
         super(name,type);
+        this.intelligence = intelligence;
+        this.damage = damage;
+        this.defense = defense;
     }
 
     public int getIntelligence() {
