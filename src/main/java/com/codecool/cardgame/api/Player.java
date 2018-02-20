@@ -18,6 +18,8 @@ public interface Player {
 
     public int getMp();
 
+    public Card getChosenCard();
+
     public void increaseMp(int mp);
 
     public void decreaseMp(int mp);
