@@ -1,18 +1,22 @@
 package com.codecool.cardgame.api;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class SpellCard extends Card {
     private String effect;
+    private int manaCost;
 
-    public SpellCard(String name, String type, String effect) {
+    public SpellCard(String name, String type, String effect,int manaCost) {
         super(name, type);
         this.effect = effect;
     }
 
     public String getEffect() {
         return effect;
+    }
+
+    public int getManaCost() {
+        return manaCost;
     }
 
     public void increaseHp(Player player) {
