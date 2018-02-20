@@ -1,10 +1,24 @@
 package com.codecool.cardgame.api;
 
+import com.codecool.cardgame.api.exception.NoManaException;
+
+import java.util.List;
+
 public class GameImpl implements Game {
 
     private Player player1;
     private Player player2;
     private String chosenAttribute;
+    private Player currentPlayer;
+    private List<Card> graveYard;
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(Player player) {
+        currentPlayer = player;
+    }
 
     public GameImpl() {
     }
@@ -43,37 +57,33 @@ public class GameImpl implements Game {
     public Player getWinner() {
         FighterCard player1Card = player1.getChosenCard();
         FighterCard player2Card = player2.getChosenCard();
-        switch (chosenAttribute){
+        graveYard.add(player1Card);
+        graveYard.add(player2Card);
+        switch (chosenAttribute) {
             case "Defense":
-                if(player1Card.getDefense() > player2Card.getDefense()){
-                   decreaseHP(player2,player1Card.getDamage());
-                   return player1;
-                }
-                else if (player1Card.getDefense() < player2Card.getDefense())
-                {
-                    decreaseHP(player1,player2Card.getDamage());
+                if (player1Card.getDefense() > player2Card.getDefense()) {
+                    decreaseHP(player2, player1Card.getDamage());
+                    return player1;
+                } else if (player1Card.getDefense() < player2Card.getDefense()) {
+                    decreaseHP(player1, player2Card.getDamage());
                     return player2;
                 }
                 return null;
             case "Damage":
-                if(player1Card.getDamage() > player2Card.getDamage()){
-                    decreaseHP(player2,player1Card.getDamage());
+                if (player1Card.getDamage() > player2Card.getDamage()) {
+                    decreaseHP(player2, player1Card.getDamage());
                     return player1;
-                }
-                else if (player1Card.getDamage() < player2Card.getDamage())
-                {
-                    decreaseHP(player1,player2Card.getDamage());
+                } else if (player1Card.getDamage() < player2Card.getDamage()) {
+                    decreaseHP(player1, player2Card.getDamage());
                     return player2;
                 }
                 return null;
             case "Intelligence":
-                if(player1Card.getIntelligence() > player2Card.getIntelligence()){
-                    decreaseHP(player2,player1Card.getDamage());
+                if (player1Card.getIntelligence() > player2Card.getIntelligence()) {
+                    decreaseHP(player2, player1Card.getDamage());
                     return player1;
-                }
-                else if (player1Card.getIntelligence() < player2Card.getIntelligence())
-                {
-                    decreaseHP(player1,player2Card.getDamage());
+                } else if (player1Card.getIntelligence() < player2Card.getIntelligence()) {
+                    decreaseHP(player1, player2Card.getDamage());
                     return player2;
                 }
                 return null;
@@ -82,9 +92,40 @@ public class GameImpl implements Game {
         }
     }
 
+    public boolean canUseSpell() {
+        for (Card card : currentPlayer.getHand()) {
+            if (card instanceof SpellCard) {
+                if (currentPlayer.getMp() > 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public void decideSpell(SpellCard spellCard) throws NoManaException {
+        if (spellCard.getManaCost() < currentPlayer.getMp()) {
+            if (spellCard.getEffect().equals("Increase HP")) {
+                spellCard.increaseHp(currentPlayer);
+            } else if (spellCard.getEffect().equals("Increase Damage")) {
+                spellCard.increaseDmg(currentPlayer);
+            } else if (spellCard.getEffect().equals("Increase Intelligence")) {
+                spellCard.increaseIntelligence(currentPlayer);
+            } else if (spellCard.getEffect().equals("Increase Defense")) {
+                spellCard.increaseDefense(currentPlayer);
+            } else if (spellCard.getEffect().equals("Revive")) {
+                spellCard.returnFromGraveyard(currentPlayer, graveYard);
+            }
+        } else {
+            throw new NoManaException("Not enough mana!");
+        }
+    }
+
     @Override
-    public void decreaseHP(Player player , int damage) {
+    public void decreaseHP(Player player, int damage) {
         player.decreaseHp(damage);
     }
+
 
 }
