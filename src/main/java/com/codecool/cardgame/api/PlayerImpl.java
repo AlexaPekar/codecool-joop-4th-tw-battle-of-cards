@@ -1,5 +1,6 @@
 package com.codecool.cardgame.api;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -11,11 +12,10 @@ public class PlayerImpl implements Player {
     private int hp;
     private int mp;
 
-    public PlayerImpl(String name, List<Card> deck, List<Card> hand) {
+    public PlayerImpl(String name) throws IOException {
         this.name = name;
-        this.deck = deck;
-        this.hand = hand;
         chosenCard = null;
+        fillDeck();
         this.hp = 10000;
         this.mp = 10;
     }
@@ -89,7 +89,7 @@ public class PlayerImpl implements Player {
         return attributeValue;
     }
 
-    public void fillDeck() {
+    public void fillDeck() throws IOException {
         CsvParser csvParser = new CsvParser();
         deck = csvParser.getCardsFromCsv("cards.csv");
         Collections.shuffle(deck);

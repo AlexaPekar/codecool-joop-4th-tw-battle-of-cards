@@ -1,5 +1,6 @@
 package com.codecool.cardgame.api;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface Player {
@@ -30,5 +31,5 @@ public interface Player {
 
     public int chooseAttribute(FighterCard card, String attribute);
 
-    public void fillDeck();
+    public void fillDeck() throws IOException;
 }
