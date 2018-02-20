@@ -1,12 +1,12 @@
 package com.codecool.cardgame.api;
 
-public class RoundImpl implements Round {
+public class GameImpl implements Game {
 
     private Player player1;
     private Player player2;
     private String chosenAttribute;
 
-    public RoundImpl() {
+    public GameImpl() {
     }
 
     @Override
