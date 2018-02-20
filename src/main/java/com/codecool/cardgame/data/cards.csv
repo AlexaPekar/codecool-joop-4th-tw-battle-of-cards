@@ -6,13 +6,11 @@ Gandalf the grey,Figther,55,30,45
 Gandalf the white,Figther,90,45,69
 PistaBátya,Figther,60,50,34
 Leslie the black magician,Figther,70,40,65
-Medical Sausage,Spell,HP
-Sauron's eye,Spell,Increase Damage
-Invisibility jacket,Spell,Increse Defense
-Magic mushroom,Spell,HP
-Magic bean,Spell,Increase Damage
-Magic Aura,Spell,Increase Defense
-Liquid Luck,Spell,Increase Intelligence
-Elder Wand,Spell,Increase Intelligence
-
-
+Medical Sausage,Spell,HP,3,
+Sauron's eye,Spell,Increase Damage,4,
+Invisibility jacket,Spell,Increse Defense,2,
+Magic mushroom,Spell,HP,5,
+Magic bean,Spell,Increase Damage,4,
+Magic Aura,Spell,Increase Defense,6,
+Liquid Luck,Spell,Increase Intelligence,7,
+Elder Wand,Spell,Increase Intelligence,8,
