@@ -129,11 +129,6 @@ public class PlayerImpl implements Player {
 
     @Override
     public String toString() {
-        return "PlayerImpl{" +
-                "name='" + name + '\n' +
-                " hp=" + hp +
-                " \t mp=" + mp +
-                "\n\n hand=" + hand +
-                '}';
+        return "Player Name: "+ getName() + "\n Health: " +getHp()+ " Mana: " +getMp();
     }
 }
