@@ -1,15 +1,15 @@
-Xardas,Figther,50,40,60
-Dumbledore,Figther,89,45,90
-Radagast,Figther,25,30,35
-Saruman,Figther,75,50,45
-Gandalf the grey,Figther,55,30,45
-Gandalf the white,Figther,90,45,69
-PistaBátya,Figther,60,50,34
-Leslie the black magician,Figther,70,40,65
-Medical Sausage,Spell,HP,3
+Xardas,Fighter,50,40,60
+Dumbledore,Fighter,89,45,90
+Radagast,Fighter,25,30,35
+Saruman,Fighter,75,50,45
+Gandalf the grey,Fighter,55,30,45
+Gandalf the white,Fighter,90,45,69
+PistaBátya,Fighter,60,50,34
+Leslie the black magician,Fighter,70,40,65
+Medical Sausage,Spell,Increase HP,3
 Sauron's eye,Spell,Increase Damage,4
 Invisibility jacket,Spell,Increse Defense,2
-Magic mushroom,Spell,HP,5
+Magic mushroom,Spell,Increase HP,5
 Magic bean,Spell,Increase Damage,4
 Magic Aura,Spell,Increase Defense,6
 Liquid Luck,Spell,Increase Intelligence,7
