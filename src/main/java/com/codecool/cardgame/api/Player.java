@@ -33,8 +33,6 @@ public interface Player {
 
     public void chooseCard(String name);
 
-    public void chooseSpellCard(String name);
-
     public int chooseAttribute(FighterCard card, String attribute);
 
     public void fillDeck() throws IOException;
