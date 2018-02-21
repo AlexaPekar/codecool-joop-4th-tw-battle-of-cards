@@ -41,4 +41,9 @@ public class SpellCard extends Card {
         graveYard.remove(graveYard.get(0));
 
     }
+
+    @Override
+    public String toString() {
+        return "Name: "+getName()+" type: "+getType()+ " effect: "+getEffect()+" mana cost: "+getManaCost();
+    }
 }
