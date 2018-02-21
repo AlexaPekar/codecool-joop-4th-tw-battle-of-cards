@@ -1,5 +1,7 @@
 package com.codecool.cardgame.api;
 
+import com.codecool.cardgame.api.exception.RoundDrawException;
+import com.codecool.cardgame.api.exception.WrongInputException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -74,7 +76,7 @@ class GameImplTest {
     }
 
     @Test
-    void getWinner() {
+    void getWinner() throws RoundDrawException, WrongInputException {
         assertEquals(player2, gameImpl.getWinner());
     }
 
