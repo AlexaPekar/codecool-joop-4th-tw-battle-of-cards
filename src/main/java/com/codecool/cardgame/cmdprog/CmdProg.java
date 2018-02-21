@@ -45,20 +45,26 @@ public class CmdProg {
         handleStatistics(player);
         listCards(player.getHand());
         if (!defendingPlayer.getName().equals(player.getName())) {
+            System.out.println("Choose a card,enter its name.");
             String chosenCardAsString = scan.nextLine();
             player.chooseCard(chosenCardAsString);
+            System.out.println("Choose an attribute(damage,defense,intelligence).");
+            System.out.println(player.getChosenCard().toString());
             String chosenAttributeAsString = scan.nextLine().toUpperCase();
             player.chooseAttribute(player.getChosenCard(), chosenAttributeAsString);
         }
         else {
+            System.out.println("Choose a card,enter its name.");
             String chosenCardAsString = scan.nextLine();
             player.chooseCard(chosenCardAsString);
         }
 
         if(game.canUseSpell()) {
+            System.out.println("You can use a spell.");
             listSpells(player);
+            System.out.println("Enter the name of the spell.");
             String spellName = scan.nextLine();
-            player.chooseSpellCard(spellName);
+            player.chooseCard(spellName);
             try {
                 game.decideSpell(player.getChosenSpell());
             } catch (NoManaException ex) {
@@ -126,11 +132,11 @@ public class CmdProg {
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
         if (numberOfRound % 2 == 0) {
-            game.setCurrentPlayer(player2);
+            game.setCurrentPlayer(player1);
             numberOfRound++;
             System.out.println("Round of " + player1.getName());
         } else {
-            game.setCurrentPlayer(player1);
+            game.setCurrentPlayer(player2);
             numberOfRound++;
             System.out.println("Round of " + player2.getName());
         }
