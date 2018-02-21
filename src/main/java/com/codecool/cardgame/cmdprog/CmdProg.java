@@ -5,23 +5,29 @@ import com.codecool.cardgame.api.exception.NoManaException;
 
 import javax.swing.*;
 import javax.swing.text.StyledEditorKit;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 public class CmdProg {
     private GameImpl game;
     private Scanner scan = new Scanner(System.in);
-    int numberOfRound = 1;
+    int numberOfRound = 0;
     boolean canPlay = true;
-    Player winner = null;
-    Player defendingPlayer = game.getPlayer2();
+    private Player winner = null;
+    private Player defendingPlayer = null;
 
     public CmdProg() {
         game = new GameImpl();
     }
 
     public void run() {
-        handlePlayerCreation();
+        try {
+            handlePlayerCreation();
+            switchPlayers();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         while (canPlay) {
             canPlay();
             getPlayerDecision();
@@ -30,6 +36,9 @@ public class CmdProg {
 
     public void getPlayerDecision() {
         Player player = game.getCurrentPlayer();
+        if(defendingPlayer == null){
+            defendingPlayer = game.getPlayer2();
+        }
         if (numberOfRound > 2) {
             checkHand(player);
         }
@@ -71,18 +80,20 @@ public class CmdProg {
         }
     }
 
-    public void handlePlayerCreation() {
+    public void handlePlayerCreation() throws IOException {
         System.out.println("Enter name of player 1.");
         String nameP1 = scan.nextLine();
-        game.getPlayer1().setName(nameP1);
+        Player player1 = new PlayerImpl(nameP1);
+        game.setPlayer1(player1);
         System.out.println("Enter name of player 2.");
         String nameP2 = scan.nextLine();
-        game.getPlayer2().setName(nameP2);
+        Player player2 = new PlayerImpl(nameP2);
+        game.setPlayer2(player2);
     }
 
     public void listCards(List<Card> cards) {
         for (Card card:cards) {
-            System.out.println(card);
+            System.out.println(card.toString());
         }
     }
 
