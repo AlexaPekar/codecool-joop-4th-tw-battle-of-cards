@@ -1,6 +1,8 @@
 package com.codecool.cardgame.api;
 
 import com.codecool.cardgame.api.exception.NoManaException;
+import com.codecool.cardgame.api.exception.RoundDrawException;
+import com.codecool.cardgame.api.exception.WrongInputException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +58,7 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public Player getWinner() {
+    public Player getWinner() throws RoundDrawException, WrongInputException {
         FighterCard player1Card = player1.getChosenCard();
         FighterCard player2Card = player2.getChosenCard();
         graveyard.add(player1Card);
@@ -71,7 +73,7 @@ public class GameImpl implements Game {
                     decreaseHP(player1, player2Card.getDamage());
                     return player2;
                 }
-                return null;
+                throw new RoundDrawException("It's a draw round");
             case DAMAGE:
                 if (player1Card.getDamage() > player2Card.getDamage()) {
                     decreaseHP(player2, player1Card.getDamage());
@@ -80,7 +82,7 @@ public class GameImpl implements Game {
                     decreaseHP(player1, player2Card.getDamage());
                     return player2;
                 }
-                return null;
+                throw new RoundDrawException("It's a draw round");
             case INTELLIGENCE:
                 if (player1Card.getIntelligence() > player2Card.getIntelligence()) {
                     decreaseHP(player2, player1Card.getDamage());
@@ -89,9 +91,9 @@ public class GameImpl implements Game {
                     decreaseHP(player1, player2Card.getDamage());
                     return player2;
                 }
-                return null;
+                throw new RoundDrawException("It's a draw round");
             default:
-                return null;
+                throw new WrongInputException("Wrong input");
         }
     }
 
