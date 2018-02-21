@@ -140,6 +140,9 @@ public class CmdProg {
 
     public void checkHand(Player player) {
         List<Card> hand = player.getHand();
+        if (hand.size() < 3) {
+            player.pickCard();
+        }
         Boolean fighter = false;
         for (Card card:player.getHand()) {
             if (card instanceof FighterCard) {
