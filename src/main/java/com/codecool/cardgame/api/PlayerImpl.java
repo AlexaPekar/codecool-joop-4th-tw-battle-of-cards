@@ -9,6 +9,7 @@ public class PlayerImpl implements Player {
     private List<Card> deck;
     private List<Card> hand;
     private FighterCard chosenCard;
+    private SpellCard chosenSpell;
     private int hp;
     private int mp;
 
@@ -34,6 +35,10 @@ public class PlayerImpl implements Player {
 
     public FighterCard getChosenCard() {
         return chosenCard;
+    }
+
+    public SpellCard getChosenSpell() {
+        return chosenSpell;
     }
 
     public int getHp() {
@@ -72,9 +77,21 @@ public class PlayerImpl implements Player {
         for (Card card : hand) {
             if (card.getName().equals(name)) {
                 chosenCard = (FighterCard) card;
+                hand.remove(card);
             }
         }
     }
+
+    public void chooseSpellCard(String name) {
+        for (Card card : hand) {
+            if (card.getName().equals(name)) {
+                chosenSpell = (SpellCard) card;
+                hand.remove(card);
+            }
+        }
+    }
+
+
     public int chooseAttribute(FighterCard card,String attribute) {
         int attributeValue = 0;
         if (attribute.equals("Damage")) {
