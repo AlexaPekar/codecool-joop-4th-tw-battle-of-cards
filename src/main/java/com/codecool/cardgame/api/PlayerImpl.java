@@ -30,6 +30,10 @@ public class PlayerImpl implements Player {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<Card> getDeck() {
         return deck;
     }
@@ -98,7 +102,7 @@ public class PlayerImpl implements Player {
             }
         }
     }
-    
+
     public int chooseAttribute(FighterCard card,String attribute) {
         int attributeValue = 0;
         if (attribute.equals("Damage")) {
