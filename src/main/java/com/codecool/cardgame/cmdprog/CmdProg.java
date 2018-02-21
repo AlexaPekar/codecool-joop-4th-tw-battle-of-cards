@@ -27,6 +27,7 @@ public class CmdProg {
         try {
             handlePlayerCreation();
             game.setCurrentPlayer(game.getPlayer1());
+            defendingPlayer = game.getPlayer2();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -37,16 +38,8 @@ public class CmdProg {
     }
 
     public void getPlayerDecision() {
-        if (numberOfRound % 2 == 1 && numberOfRound != 1) {
-            printWinner();
-        }
         Player player = game.getCurrentPlayer();
-        if(defendingPlayer == null){
-            defendingPlayer = game.getPlayer2();
-        }
-        if (numberOfRound > 2) {
-            checkHand(player);
-        }
+        checkHand(player);
         handleStatistics(player);
         listCards(player.getHand());
         if (!defendingPlayer.getName().equals(player.getName())) {
@@ -66,28 +59,36 @@ public class CmdProg {
         }
 
         if(game.canUseSpell()) {
-            System.out.println("You can use a spell.");
-            listSpells(player);
-            System.out.println("Enter the name of the spell.");
-            String spellName = scan.nextLine();
-            player.chooseCard(spellName);
-            try {
-                game.decideSpell(player.getChosenSpell());
-            } catch (NoManaException ex) {
-                System.out.println(ex.getMessage());
+            System.out.println("You can use a spell.But do you want to? Yes/No");
+            String choice = scan.nextLine().toLowerCase();
+            if (choice.equals("yes")) {
+                listSpells(player);
+                System.out.println("Enter the name of the spell.");
+                String spellName = scan.nextLine();
+                player.chooseCard(spellName);
+                try {
+                    game.decideSpell(player.getChosenSpell());
+                } catch (NoManaException ex) {
+                    System.out.println(ex.getMessage());
+                }
             }
+        }
+        if (numberOfRound % 2 == 0) {
+            switchDefendingPlayer();
+        }
+        if (numberOfRound % 2 == 0) {
+            printWinner();
         }
         switchPlayers();
     }
 
     public void switchDefendingPlayer() {
-        if (numberOfRound % 3 == 0) {
-            if(game.getCurrentPlayer().equals(game.getPlayer1())) {
+            if(defendingPlayer.getName().equals(game.getPlayer1().getName())) {
                 defendingPlayer = game.getPlayer2();
-            } else {
+            }
+            else if (defendingPlayer.getName().equals(game.getPlayer2().getName())){
                 defendingPlayer = game.getPlayer1();
             }
-        }
     }
 
     public void printWinner() {
@@ -140,6 +141,11 @@ public class CmdProg {
     public void checkHand(Player player) {
         List<Card> hand = player.getHand();
         Boolean fighter = false;
+        for (Card card:player.getHand()) {
+            if (card instanceof FighterCard) {
+                fighter = true;
+            }
+        }
         while (fighter.equals(false) && player.getDeck().size() != 0) {
             player.pickCard();
             for (Card card:hand) {
@@ -158,12 +164,12 @@ public class CmdProg {
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
 
-        switchDefendingPlayer();
-        if (game.getCurrentPlayer().equals(player1)) {
+        if (game.getCurrentPlayer().getName().equals(player1.getName())) {
             game.setCurrentPlayer(player2);
             numberOfRound++;
             System.out.println("Round of " + player2.getName());
-        } else {
+        }
+        else if (game.getCurrentPlayer().getName().equals(player2.getName())){
             game.setCurrentPlayer(player1);
             numberOfRound++;
             System.out.println("Round of " + player1.getName());
