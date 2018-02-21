@@ -62,7 +62,9 @@ public class GameImpl implements Game {
         FighterCard player1Card = player1.getChosenCard();
         FighterCard player2Card = player2.getChosenCard();
         graveyard.add(player1Card);
+        player1.getHand().remove(player1Card);
         graveyard.add(player2Card);
+        player2.getHand().remove(player2Card);
         CardAttribute attribute = CardAttribute.valueOf(chosenAttribute);
         switch (attribute) {
             case DEFENSE:
