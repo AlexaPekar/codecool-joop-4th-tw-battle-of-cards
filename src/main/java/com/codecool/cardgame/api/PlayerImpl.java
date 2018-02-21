@@ -1,6 +1,7 @@
 package com.codecool.cardgame.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,9 +15,13 @@ public class PlayerImpl implements Player {
     private int mp;
 
     public PlayerImpl(String name) throws IOException {
+        fillDeck();
+        hand = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            pickCard();
+        }
         this.name = name;
         chosenCard = null;
-        fillDeck();
         this.hp = 10000;
         this.mp = 10;
     }
@@ -35,10 +40,6 @@ public class PlayerImpl implements Player {
 
     public FighterCard getChosenCard() {
         return chosenCard;
-    }
-
-    public SpellCard getChosenSpell() {
-        return chosenSpell;
     }
 
     public int getHp() {
@@ -73,13 +74,20 @@ public class PlayerImpl implements Player {
         deck.remove(deck.get(0));
     }
 
+    public void setChosenCard(Card card) {
+        chosenCard = (FighterCard) card;
+    }
+
     public void chooseCard(String name) {
         for (Card card : hand) {
             if (card.getName().equals(name)) {
-                chosenCard = (FighterCard) card;
-                hand.remove(card);
+                setChosenCard((FighterCard) card);
             }
         }
+    }
+
+    public SpellCard getChosenSpell() {
+        return chosenSpell;
     }
 
     public void chooseSpellCard(String name) {
@@ -90,8 +98,7 @@ public class PlayerImpl implements Player {
             }
         }
     }
-
-
+    
     public int chooseAttribute(FighterCard card,String attribute) {
         int attributeValue = 0;
         if (attribute.equals("Damage")) {
