@@ -12,13 +12,41 @@ import java.util.Scanner;
 public class CmdProg {
     private GameImpl game;
     private Scanner scan = new Scanner(System.in);
+    int numberOfRound = 1;
+    boolean canPlay = true;
+    Player winner = null;
 
     public CmdProg() {
         game = new GameImpl();
     }
 
     public void run() {
+        handlePlayerCreation();
+        while (canPlay) {
+            canPlay();
+            getPlayerDecision();
+        }
+    }
 
+    public void getPlayerDecision() {
+        Player player = game.getCurrentPlayer();
+        listCards(player, player.getHand());
+        String chosenCardAsString = scan.nextLine();
+        player.chooseCard(chosenCardAsString);
+        String chosenAttributeAsString = scan.nextLine().toUpperCase();
+        player.chooseAttribute(player.getChosenCard(), chosenAttributeAsString);
+        switchPlayers();
+    }
+
+    public void canPlay() {
+        if (game.getPlayer1().getHp() < 1 || game.getPlayer2().getHp() < 1) {
+            canPlay = false;
+            if (game.getPlayer1().getHp() > 1) {
+                winner = game.getPlayer1();
+            } else {
+                winner = game.getPlayer2();
+            }
+        }
     }
 
     public void handlePlayerCreation() {
@@ -46,6 +74,24 @@ public class CmdProg {
                     fighter = true;
                 }
             }
+        }
+    }
+
+    public void handleStatistics(Player player) {
+        System.out.println(player);
+    }
+
+    public void switchPlayers() {
+        Player player1 = game.getPlayer1();
+        Player player2 = game.getPlayer2();
+        if (numberOfRound % 2 == 0) {
+            game.setCurrentPlayer(player2);
+            numberOfRound++;
+            System.out.println("Round of " + player1.getName());
+        } else {
+            game.setCurrentPlayer(player1);
+            numberOfRound++;
+            System.out.println("Round of " + player2.getName());
         }
     }
 
