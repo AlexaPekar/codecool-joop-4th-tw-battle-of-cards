@@ -9,6 +9,7 @@ public class SpellCard extends Card {
     public SpellCard(String name, String type, String effect,int manaCost) {
         super(name, type);
         this.effect = effect;
+        this.manaCost = manaCost;
     }
 
     public String getEffect() {
