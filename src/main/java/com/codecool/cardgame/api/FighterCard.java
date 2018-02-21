@@ -39,6 +39,11 @@ public class FighterCard extends Card {
     public void increaseIntelligence(int intelligence) { this.intelligence += intelligence; }
 
     public void increaseDefense(int defense) { this.defense += defense; }
+
+    @Override
+    public String toString() {
+        return "Name: "+getName()+" type: "+getType()+ " damage: "+getDamage() +" defense: "+getDefense() +" intelligence: "+getIntelligence();
+    }
 }
 
 
