@@ -86,8 +86,16 @@ public class PlayerImpl implements Player {
 
     public void chooseCard(String name) {
         for (Card card : hand) {
-            if (card.getName().equals(name)) {
-                setChosenCard((FighterCard) card);
+            if (card instanceof FighterCard) {
+                if (card.getName().equals(name)) {
+                    setChosenCard((FighterCard) card);
+                }
+            }
+            else {
+                if (card.getName().equals(name)) {
+                    setChosenSpell((SpellCard) card);
+                }
+
             }
         }
     }
@@ -96,14 +104,11 @@ public class PlayerImpl implements Player {
         return chosenSpell;
     }
 
-    public void chooseSpellCard(String name) {
-        for (Card card : hand) {
-            if (card.getName().equals(name)) {
-                chosenSpell = (SpellCard) card;
-                hand.remove(card);
-            }
-        }
+    public void setChosenSpell(Card card) {
+        chosenSpell = (SpellCard) card;
     }
+
+
 
     public int chooseAttribute(FighterCard card,String attribute) {
         int attributeValue = 0;
