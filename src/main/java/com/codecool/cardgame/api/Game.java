@@ -1,5 +1,7 @@
 package com.codecool.cardgame.api;
 
+import com.codecool.cardgame.api.exception.NoManaException;
+
 public interface Game {
 
     Player getPlayer1();
@@ -9,6 +11,8 @@ public interface Game {
     void setPlayer2(Player player);
     void setChosenAttribute(String attribute);
     Player getWinner();
+    void decideSpell(SpellCard spellCard) throws NoManaException;
+    boolean canUseSpell();
     void decreaseHP(Player player, int damage);
 
 }

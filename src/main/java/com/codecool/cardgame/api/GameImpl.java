@@ -2,6 +2,7 @@ package com.codecool.cardgame.api;
 
 import com.codecool.cardgame.api.exception.NoManaException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameImpl implements Game {
@@ -12,15 +13,16 @@ public class GameImpl implements Game {
     private Player currentPlayer;
     private List<Card> graveYard;
 
+    public GameImpl() {
+        graveYard = new ArrayList<>();
+    }
+
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
     public void setCurrentPlayer(Player player) {
         currentPlayer = player;
-    }
-
-    public GameImpl() {
     }
 
     @Override
