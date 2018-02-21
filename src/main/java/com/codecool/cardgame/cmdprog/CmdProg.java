@@ -2,6 +2,8 @@ package com.codecool.cardgame.cmdprog;
 
 import com.codecool.cardgame.api.*;
 import com.codecool.cardgame.api.exception.NoManaException;
+import com.codecool.cardgame.api.exception.RoundDrawException;
+import com.codecool.cardgame.api.exception.WrongInputException;
 
 import javax.swing.*;
 import javax.swing.text.StyledEditorKit;
@@ -12,7 +14,7 @@ import java.util.Scanner;
 public class CmdProg {
     private GameImpl game;
     private Scanner scan = new Scanner(System.in);
-    int numberOfRound = 0;
+    int numberOfRound = 1;
     boolean canPlay = true;
     private Player winner = null;
     private Player defendingPlayer = null;
@@ -24,7 +26,7 @@ public class CmdProg {
     public void run() {
         try {
             handlePlayerCreation();
-            switchPlayers();
+            game.setCurrentPlayer(game.getPlayer1());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -35,6 +37,9 @@ public class CmdProg {
     }
 
     public void getPlayerDecision() {
+        if (numberOfRound % 2 == 1 && numberOfRound != 1) {
+            printWinner();
+        }
         Player player = game.getCurrentPlayer();
         if(defendingPlayer == null){
             defendingPlayer = game.getPlayer2();
@@ -52,6 +57,7 @@ public class CmdProg {
             System.out.println(player.getChosenCard().toString());
             String chosenAttributeAsString = scan.nextLine().toUpperCase();
             player.chooseAttribute(player.getChosenCard(), chosenAttributeAsString);
+            game.setChosenAttribute(chosenAttributeAsString);
         }
         else {
             System.out.println("Choose a card,enter its name.");
@@ -71,8 +77,28 @@ public class CmdProg {
                 System.out.println(ex.getMessage());
             }
         }
-        defendingPlayer = player;
         switchPlayers();
+    }
+
+    public void switchDefendingPlayer() {
+        if (numberOfRound % 3 == 0) {
+            if(game.getCurrentPlayer().equals(game.getPlayer1())) {
+                defendingPlayer = game.getPlayer2();
+            } else {
+                defendingPlayer = game.getPlayer1();
+            }
+        }
+    }
+
+    public void printWinner() {
+        try {
+            Player roundWinner = game.getWinner();
+            System.out.println("This round's winner is: " + roundWinner.getName());
+        } catch (RoundDrawException e) {
+            System.out.println(e.getMessage());
+        } catch (WrongInputException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void canPlay() {
@@ -131,14 +157,16 @@ public class CmdProg {
     public void switchPlayers() {
         Player player1 = game.getPlayer1();
         Player player2 = game.getPlayer2();
-        if (numberOfRound % 2 == 0) {
-            game.setCurrentPlayer(player1);
-            numberOfRound++;
-            System.out.println("Round of " + player1.getName());
-        } else {
+
+        switchDefendingPlayer();
+        if (game.getCurrentPlayer().equals(player1)) {
             game.setCurrentPlayer(player2);
             numberOfRound++;
             System.out.println("Round of " + player2.getName());
+        } else {
+            game.setCurrentPlayer(player1);
+            numberOfRound++;
+            System.out.println("Round of " + player1.getName());
         }
     }
 
