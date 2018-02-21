@@ -128,12 +128,10 @@ public class PlayerImpl implements Player {
     @Override
     public String toString() {
         return "PlayerImpl{" +
-                "name='" + name + '\'' +
-                ", deck=" + deck +
-                ", hand=" + hand +
-                ", chosenCard=" + chosenCard +
-                ", hp=" + hp +
-                ", mp=" + mp +
+                "name='" + name + '\n' +
+                " hp=" + hp +
+                " \t mp=" + mp +
+                "\n\n hand=" + hand +
                 '}';
     }
 }
