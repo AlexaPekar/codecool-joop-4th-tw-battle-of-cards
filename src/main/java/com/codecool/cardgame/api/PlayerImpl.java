@@ -15,11 +15,13 @@ public class PlayerImpl implements Player {
     private int mp;
 
     public PlayerImpl(String name) throws IOException {
-        fillDeck();
         hand = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            pickCard();
-        }
+        fillDeck();
+
+        pickCard();
+        pickCard();
+        pickCard();
+
         this.name = name;
         chosenCard = null;
         this.hp = 10000;

@@ -1,13 +1,8 @@
-package com.codecool;
+package com.codecool.cardgame.cmdprog;
 
 public class Main {
-
-    public String getWelcomeString() {
-        return "Hi!";
-    }
-
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println(main.getWelcomeString());
+        CmdProg game = new CmdProg();
+        game.run();
     }
 }
