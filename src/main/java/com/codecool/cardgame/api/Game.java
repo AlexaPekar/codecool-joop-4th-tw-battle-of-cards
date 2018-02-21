@@ -2,6 +2,8 @@ package com.codecool.cardgame.api;
 
 import com.codecool.cardgame.api.exception.NoManaException;
 
+import java.util.List;
+
 public interface Game {
 
     Player getPlayer1();
@@ -14,5 +16,7 @@ public interface Game {
     void decideSpell(SpellCard spellCard) throws NoManaException;
     boolean canUseSpell();
     void decreaseHP(Player player, int damage);
+    List<Card> getGraveyard();
+
 
 }

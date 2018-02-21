@@ -11,10 +11,10 @@ public class GameImpl implements Game {
     private Player player2;
     private String chosenAttribute;
     private Player currentPlayer;
-    private List<Card> graveYard;
+    private List<Card> graveyard;
 
     public GameImpl() {
-        graveYard = new ArrayList<>();
+        graveyard = new ArrayList<>();
     }
 
     public Player getCurrentPlayer() {
@@ -59,10 +59,11 @@ public class GameImpl implements Game {
     public Player getWinner() {
         FighterCard player1Card = player1.getChosenCard();
         FighterCard player2Card = player2.getChosenCard();
-        graveYard.add(player1Card);
-        graveYard.add(player2Card);
-        switch (chosenAttribute) {
-            case "Defense":
+        graveyard.add(player1Card);
+        graveyard.add(player2Card);
+        CardAttribute attribute = CardAttribute.valueOf(chosenAttribute);
+        switch (attribute) {
+            case DEFENSE:
                 if (player1Card.getDefense() > player2Card.getDefense()) {
                     decreaseHP(player2, player1Card.getDamage());
                     return player1;
@@ -71,7 +72,7 @@ public class GameImpl implements Game {
                     return player2;
                 }
                 return null;
-            case "Damage":
+            case DAMAGE:
                 if (player1Card.getDamage() > player2Card.getDamage()) {
                     decreaseHP(player2, player1Card.getDamage());
                     return player1;
@@ -80,7 +81,7 @@ public class GameImpl implements Game {
                     return player2;
                 }
                 return null;
-            case "Intelligence":
+            case INTELLIGENCE:
                 if (player1Card.getIntelligence() > player2Card.getIntelligence()) {
                     decreaseHP(player2, player1Card.getDamage());
                     return player1;
@@ -101,7 +102,6 @@ public class GameImpl implements Game {
                     return true;
                 }
             }
-            return false;
         }
         return false;
     }
@@ -117,7 +117,7 @@ public class GameImpl implements Game {
             } else if (spellCard.getEffect().equals("Increase Defense")) {
                 spellCard.increaseDefense(currentPlayer);
             } else if (spellCard.getEffect().equals("Revive")) {
-                spellCard.returnFromGraveyard(currentPlayer, graveYard);
+                spellCard.returnFromGraveyard(currentPlayer, graveyard);
             }
         } else {
             throw new NoManaException("Not enough mana!");
@@ -127,6 +127,11 @@ public class GameImpl implements Game {
     @Override
     public void decreaseHP(Player player, int damage) {
         player.decreaseHp(damage);
+    }
+
+    @Override
+    public List<Card> getGraveyard() {
+        return graveyard;
     }
 
 
