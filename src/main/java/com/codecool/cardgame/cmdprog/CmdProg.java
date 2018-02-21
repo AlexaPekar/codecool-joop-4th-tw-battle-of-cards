@@ -1,10 +1,9 @@
 package com.codecool.cardgame.cmdprog;
 
-import com.codecool.cardgame.api.Card;
-import com.codecool.cardgame.api.FighterCard;
-import com.codecool.cardgame.api.GameImpl;
-import com.codecool.cardgame.api.Player;
+import com.codecool.cardgame.api.*;
+import com.codecool.cardgame.api.exception.NoManaException;
 
+import javax.swing.*;
 import javax.swing.text.StyledEditorKit;
 import java.util.List;
 import java.util.Scanner;
@@ -15,6 +14,7 @@ public class CmdProg {
     int numberOfRound = 1;
     boolean canPlay = true;
     Player winner = null;
+    Player defendingPlayer = game.getPlayer2();
 
     public CmdProg() {
         game = new GameImpl();
@@ -30,11 +30,33 @@ public class CmdProg {
 
     public void getPlayerDecision() {
         Player player = game.getCurrentPlayer();
-        listCards(player, player.getHand());
-        String chosenCardAsString = scan.nextLine();
-        player.chooseCard(chosenCardAsString);
-        String chosenAttributeAsString = scan.nextLine().toUpperCase();
-        player.chooseAttribute(player.getChosenCard(), chosenAttributeAsString);
+        if (numberOfRound > 2) {
+            checkHand(player);
+        }
+        handleStatistics(player);
+        listCards(player.getHand());
+        if (!defendingPlayer.getName().equals(player.getName())) {
+            String chosenCardAsString = scan.nextLine();
+            player.chooseCard(chosenCardAsString);
+            String chosenAttributeAsString = scan.nextLine().toUpperCase();
+            player.chooseAttribute(player.getChosenCard(), chosenAttributeAsString);
+        }
+        else {
+            String chosenCardAsString = scan.nextLine();
+            player.chooseCard(chosenCardAsString);
+        }
+
+        if(game.canUseSpell()) {
+            listSpells(player);
+            String spellName = scan.nextLine();
+            player.chooseSpellCard(spellName);
+            try {
+                game.decideSpell(player.getChosenSpell());
+            } catch (NoManaException ex) {
+                System.out.println(ex.getMessage());
+            }
+        }
+        defendingPlayer = player;
         switchPlayers();
     }
 
@@ -58,9 +80,17 @@ public class CmdProg {
         game.getPlayer2().setName(nameP2);
     }
 
-    public void listCards(Player player,List<Card> cards) {
+    public void listCards(List<Card> cards) {
         for (Card card:cards) {
             System.out.println(card);
+        }
+    }
+
+    public void listSpells(Player player) {
+        for (Card card:player.getHand()) {
+            if (card instanceof SpellCard) {
+                System.out.println(card);
+            }
         }
     }
 
