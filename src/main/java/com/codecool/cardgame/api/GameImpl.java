@@ -63,9 +63,8 @@ public class GameImpl implements Game {
         FighterCard player2Card = player2.getChosenCard();
         graveyard.add(player1Card);
         graveyard.add(player2Card);
-        CardAttribute attribute = CardAttribute.valueOf(chosenAttribute);
-        switch (attribute) {
-            case DEFENSE:
+        switch (chosenAttribute) {
+            case "DEFENSE":
                 if (player1Card.getDefense() > player2Card.getDefense()) {
                     decreaseHP(player2, player1Card.getDamage());
                     return player1;
@@ -74,7 +73,7 @@ public class GameImpl implements Game {
                     return player2;
                 }
                 throw new RoundDrawException("It's a draw round");
-            case DAMAGE:
+            case "DAMAGE":
                 if (player1Card.getDamage() > player2Card.getDamage()) {
                     decreaseHP(player2, player1Card.getDamage());
                     return player1;
@@ -83,7 +82,7 @@ public class GameImpl implements Game {
                     return player2;
                 }
                 throw new RoundDrawException("It's a draw round");
-            case INTELLIGENCE:
+            case "INTELLIGENCE":
                 if (player1Card.getIntelligence() > player2Card.getIntelligence()) {
                     decreaseHP(player2, player1Card.getDamage());
                     return player1;
