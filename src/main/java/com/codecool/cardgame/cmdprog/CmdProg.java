@@ -30,14 +30,19 @@ public class CmdProg {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        while (canPlay) {
+        while (true) {
             canPlay();
+            if (!canPlay) {
+                break;
+            }
             getPlayerDecision();
         }
+        System.out.println("Congratulations " + winner.getName() + ", you won the game!");
     }
 
     public void getPlayerDecision() {
         Player player = game.getCurrentPlayer();
+        System.out.println("Round of " + player.getName());
         player.increaseMp(1);
         checkHand(player);
         handleStatistics(player);
@@ -199,12 +204,10 @@ public class CmdProg {
         if (game.getCurrentPlayer().getName().equals(player1.getName())) {
             game.setCurrentPlayer(player2);
             numberOfRound++;
-            System.out.println("Round of " + player2.getName());
         }
         else if (game.getCurrentPlayer().getName().equals(player2.getName())){
             game.setCurrentPlayer(player1);
             numberOfRound++;
-            System.out.println("Round of " + player1.getName());
         }
     }
 
