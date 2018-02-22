@@ -14,7 +14,6 @@ public class CmdProg {
     private GameImpl game;
     private Scanner scan = new Scanner(System.in);
     private Player winner = null;
-    private Player defendingPlayer = null;
 
     public CmdProg() {
         game = new GameImpl();
@@ -36,7 +35,7 @@ public class CmdProg {
                     try {
                         handlePlayerCreation();
                         game.setCurrentPlayer(game.getPlayer1());
-                        defendingPlayer = game.getPlayer2();
+                        game.setDefendingPlayer(game.getPlayer2());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -70,13 +69,14 @@ public class CmdProg {
         game.checkHand(player);
         handleStatistics(player);
         listCards(player.getHand());
-        if (!defendingPlayer.getName().equals(player.getName())) {
+        if (!game.getDefendingPlayer().getName().equals(player.getName())) {
             System.out.println("\nChoose a card,enter its name.");
             String chosenCardAsString = scan.nextLine();
-            while (!handContains(chosenCardAsString, player)) {
-                System.out.println("There's no such card in your hand!");
+            while (!(game.getCardByName(chosenCardAsString) instanceof FighterCard)) {
+                System.out.println("Not a fighter card or you don't have it in your hand!");
                 chosenCardAsString = scan.nextLine();
             }
+
             player.chooseCard(chosenCardAsString);
             System.out.println("Choose an attribute(damage,defense,intelligence).");
             System.out.println(player.getChosenCard().toString());
@@ -92,7 +92,11 @@ public class CmdProg {
         else {
             System.out.println("\nChoose a card,enter its name.");
             String chosenCardAsString = scan.nextLine();
-            while (!handContains(chosenCardAsString, player)) {
+            while (!(game.getCardByName(chosenCardAsString) instanceof FighterCard)) {
+                System.out.println("Not a fighter card!");
+                chosenCardAsString = scan.nextLine();
+            }
+            while (!game.handContains(chosenCardAsString, player)) {
                 System.out.println("There's no such card in your hand!");
                 chosenCardAsString = scan.nextLine();
             }
@@ -103,12 +107,16 @@ public class CmdProg {
         if(game.canUseSpell()) {
             System.out.println("You can use a spell.But do you want to? Yes/No");
             String choice = scan.nextLine().toLowerCase();
+            while (!"yes,no".contains(choice)) {
+                System.out.println("Wrong input");
+                choice = scan.nextLine();
+            }
             if (choice.equals("yes")) {
                 listSpells(player);
                 System.out.println("Enter the name of the spell.");
                 String spellName = scan.nextLine();
-                while (!handContains(spellName, player)) {
-                    System.out.println("There's no such card in your hand!");
+                while (!(game.getCardByName(spellName) instanceof SpellCard)) {
+                    System.out.println("Not a Spell or not in your hand");
                     spellName = scan.nextLine();
                 }
                 player.chooseCard(spellName);
@@ -124,29 +132,14 @@ public class CmdProg {
             }
         }
         if (game.getNumberOfRound() % 2 == 0) {
-            switchDefendingPlayer();
+            game.switchDefendingPlayer();
             System.out.println("\n" + game.getPlayer1().getChosenCard().getName() + " VS "+game.getPlayer2().getChosenCard().getName());
             printWinner();
         }
         game.switchPlayers();
     }
 
-    public boolean handContains(String name, Player player) {
-        for (int i = 0; i < player.getHand().size(); i++) {
-            if (player.getHand().get(i).getName().toLowerCase().equals(name.toLowerCase())) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-   public void switchDefendingPlayer() {
-       if (defendingPlayer.getName().equals(game.getPlayer1().getName())) {
-           defendingPlayer = game.getPlayer2();
-       } else if (defendingPlayer.getName().equals(game.getPlayer2().getName())) {
-           defendingPlayer = game.getPlayer1();
-       }
-   }
 
     public void printWinner() {
         try {
