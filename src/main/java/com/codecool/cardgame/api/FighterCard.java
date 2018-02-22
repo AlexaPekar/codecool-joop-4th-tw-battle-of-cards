@@ -42,7 +42,7 @@ public class FighterCard extends Card {
 
     @Override
     public String toString() {
-        return "Name: "+getName()+" type: "+getType()+ " damage: "+getDamage() +" defense: "+getDefense() +" intelligence: "+getIntelligence();
+        return "Name: "+getName()+" (type: "+ "\u001B[31m" + getType()+ "\u001B[0m" + " damage: "+getDamage() +" defense: "+getDefense() +" intelligence: "+getIntelligence() + ")";
     }
 }
 
