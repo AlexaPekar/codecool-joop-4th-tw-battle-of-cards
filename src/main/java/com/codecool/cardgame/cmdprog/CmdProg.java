@@ -6,14 +6,9 @@ import com.codecool.cardgame.api.exception.RoundDrawException;
 import com.codecool.cardgame.api.exception.WrongInputException;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import static java.lang.reflect.Array.*;
-import static java.util.Arrays.asList;
 
 public class CmdProg {
     private GameImpl game;
@@ -58,7 +53,6 @@ public class CmdProg {
             System.out.println("Choose an attribute(damage,defense,intelligence).");
             System.out.println(player.getChosenCard().toString());
             String chosenAttributeAsString = scan.nextLine().toUpperCase();
-            Arrays.asList(CardAttribute.values()).contains(chosenAttributeAsString);
             while (!("DAMAGE,DEFENSE,INTELLIGENCE").contains(chosenAttributeAsString)) {
                 System.out.println("There's no such type");
                 chosenAttributeAsString = scan.nextLine().toUpperCase();
@@ -92,6 +86,9 @@ public class CmdProg {
                 player.chooseCard(spellName);
                 try {
                     game.decideSpell(player.getChosenSpell());
+                    if(player.getChosenSpell().getEffect().equals("Revive")){
+                        System.out.println("You revived: "+game.getGraveyard().get(game.getGraveyard().size()-1).getName());
+                    }
                 } catch (NoManaException ex) {
                     System.out.println(ex.getMessage());
                 }
@@ -99,8 +96,7 @@ public class CmdProg {
         }
         if (numberOfRound % 2 == 0) {
             switchDefendingPlayer();
-        }
-        if (numberOfRound % 2 == 0) {
+            System.out.println(game.getPlayer1().getChosenCard().getName() + " VS "+game.getPlayer2().getChosenCard().getName());
             printWinner();
         }
         switchPlayers();
