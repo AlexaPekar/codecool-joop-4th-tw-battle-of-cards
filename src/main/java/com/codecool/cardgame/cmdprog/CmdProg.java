@@ -161,5 +161,5 @@ public class CmdProg {
     public void handleStatistics(Player player) {
         System.out.println(player + "\n\n");
     }
-    
+
 }
