@@ -87,13 +87,13 @@ public class PlayerImpl implements Player {
     public void chooseCard(String name) {
         for (Card card : hand) {
             if (card instanceof FighterCard) {
-                if (card.getName().equals(name)) {
-                    setChosenCard((FighterCard) card);
+                if (card.getName().toLowerCase().equals(name.toLowerCase())) {
+                    setChosenCard (card);
                 }
             }
             else {
-                if (card.getName().equals(name)) {
-                    setChosenSpell((SpellCard) card);
+                if (card.getName().toLowerCase().equals(name.toLowerCase())) {
+                    setChosenSpell(card);
                 }
 
             }
