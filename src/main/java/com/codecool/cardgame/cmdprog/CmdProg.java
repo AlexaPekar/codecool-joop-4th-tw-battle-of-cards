@@ -1,7 +1,6 @@
 package com.codecool.cardgame.cmdprog;
 
 import com.codecool.cardgame.api.*;
-import com.codecool.cardgame.api.exception.CardNotFoundException;
 import com.codecool.cardgame.api.exception.NoManaException;
 import com.codecool.cardgame.api.exception.RoundDrawException;
 import com.codecool.cardgame.api.exception.WrongInputException;
@@ -15,8 +14,8 @@ import java.util.Scanner;
 public class CmdProg {
     private GameImpl game;
     private Scanner scan = new Scanner(System.in);
-    int numberOfRound = 1;
-    boolean canPlay = true;
+    private int numberOfRound = 1;
+    private boolean canPlay = true;
     private Player winner = null;
     private Player defendingPlayer = null;
 
@@ -40,6 +39,9 @@ public class CmdProg {
 
     public void getPlayerDecision() {
         Player player = game.getCurrentPlayer();
+        if(player.getMp() < 10) {
+            player.increaseMp(1);
+        }
         checkHand(player);
         handleStatistics(player);
         listCards(player.getHand());
@@ -60,7 +62,12 @@ public class CmdProg {
         else {
             System.out.println("Choose a card,enter its name.");
             String chosenCardAsString = scan.nextLine();
+            while (!handContains(chosenCardAsString, player)) {
+                System.out.println("There's no such card in your hand!");
+                chosenCardAsString = scan.nextLine();
+            }
             player.chooseCard(chosenCardAsString);
+
         }
 
         if(game.canUseSpell()) {
@@ -70,6 +77,10 @@ public class CmdProg {
                 listSpells(player);
                 System.out.println("Enter the name of the spell.");
                 String spellName = scan.nextLine();
+                while (!handContains(spellName, player)) {
+                    System.out.println("There's no such card in your hand!");
+                    spellName = scan.nextLine();
+                }
                 player.chooseCard(spellName);
                 try {
                     game.decideSpell(player.getChosenSpell());
