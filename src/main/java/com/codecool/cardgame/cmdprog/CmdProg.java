@@ -1,6 +1,7 @@
 package com.codecool.cardgame.cmdprog;
 
 import com.codecool.cardgame.api.*;
+import com.codecool.cardgame.api.exception.CardNotFoundException;
 import com.codecool.cardgame.api.exception.NoManaException;
 import com.codecool.cardgame.api.exception.RoundDrawException;
 import com.codecool.cardgame.api.exception.WrongInputException;
@@ -45,6 +46,10 @@ public class CmdProg {
         if (!defendingPlayer.getName().equals(player.getName())) {
             System.out.println("Choose a card,enter its name.");
             String chosenCardAsString = scan.nextLine();
+            while (!handContains(chosenCardAsString, player)) {
+                System.out.println("There's no such card in your hand!");
+                chosenCardAsString = scan.nextLine();
+            }
             player.chooseCard(chosenCardAsString);
             System.out.println("Choose an attribute(damage,defense,intelligence).");
             System.out.println(player.getChosenCard().toString());
@@ -80,6 +85,15 @@ public class CmdProg {
             printWinner();
         }
         switchPlayers();
+    }
+
+    public boolean handContains(String name, Player player) {
+        for (int i = 0; i < player.getHand().size(); i++) {
+            if (player.getHand().get(i).getName().toLowerCase().equals(name.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void switchDefendingPlayer() {
