@@ -5,39 +5,39 @@ import java.util.List;
 
 public interface Player {
 
-    public void setName(String name);
+    void setName(String name);
 
-    public String getName();
+    String getName();
 
-    public List<Card> getDeck();
+    List<Card> getDeck();
 
-    public List<Card> getHand();
+    List<Card> getHand();
 
-    public int getHp();
+    int getHp();
 
-    public void increaseHp(int hp);
+    void increaseHp(int hp);
 
-    public void decreaseHp(int hp);
+    void decreaseHp(int hp);
 
-    public int getMp();
+    int getMp();
 
-    public FighterCard getChosenCard();
+    FighterCard getChosenCard();
 
-    public SpellCard getChosenSpell();
+    SpellCard getChosenSpell();
 
-    public void increaseMp(int mp);
+    void increaseMp(int mp);
 
-    public void decreaseMp(int mp);
+    void decreaseMp(int mp);
 
-    public void pickCard();
+    void pickCard();
 
-    public void chooseCard(String name);
+    void chooseCard(String name);
 
-    public void setChosenSpell(Card card);
+    void setChosenSpell(Card card);
 
-    public int chooseAttribute(FighterCard card, String attribute);
+    int chooseAttribute(FighterCard card, String attribute);
 
-    public void fillDeck() throws IOException;
+    void fillDeck() throws IOException;
 
-    public String toString();
+    String toString();
 }

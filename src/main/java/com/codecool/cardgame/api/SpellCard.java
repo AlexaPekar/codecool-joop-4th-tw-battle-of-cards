@@ -37,13 +37,13 @@ public class SpellCard extends Card {
     }
 
     public void returnFromGraveyard(Player player, List<Card> graveYard) {
-        player.getHand().add(graveYard.get(0));
-        graveYard.remove(graveYard.get(0));
+        player.getHand().add(graveYard.get(graveYard.size()-1));
+        graveYard.remove(graveYard.get(graveYard.size()-1));
 
     }
 
     @Override
     public String toString() {
-        return "Name: "+getName()+" type: "+getType()+ " effect: "+getEffect()+" mana cost: "+getManaCost();
+        return "Name: "+getName()+" (type: "+ "\u001B[36m" + getType()+ "\u001B[0m" + " effect: "+getEffect()+" mana cost: "+getManaCost() + ")";
     }
 }

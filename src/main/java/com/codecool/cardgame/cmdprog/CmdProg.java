@@ -6,20 +6,13 @@ import com.codecool.cardgame.api.exception.RoundDrawException;
 import com.codecool.cardgame.api.exception.WrongInputException;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-import static java.lang.reflect.Array.*;
-import static java.util.Arrays.asList;
 
 public class CmdProg {
     private GameImpl game;
     private Scanner scan = new Scanner(System.in);
-    private int numberOfRound = 1;
-    private boolean canPlay = true;
     private Player winner = null;
     private Player defendingPlayer = null;
 
@@ -35,20 +28,21 @@ public class CmdProg {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        while (canPlay) {
-            canPlay();
+        while (game.canPlay()) {
             getPlayerDecision();
         }
+        System.out.println("\nCongratulations " + winner.getName() + ", you won the game!");
     }
 
     public void getPlayerDecision() {
         Player player = game.getCurrentPlayer();
+        System.out.println("\nRound of " + player.getName());
         player.increaseMp(1);
-        checkHand(player);
+        game.checkHand(player);
         handleStatistics(player);
         listCards(player.getHand());
         if (!defendingPlayer.getName().equals(player.getName())) {
-            System.out.println("Choose a card,enter its name.");
+            System.out.println("\nChoose a card,enter its name.");
             String chosenCardAsString = scan.nextLine();
             while (!handContains(chosenCardAsString, player)) {
                 System.out.println("There's no such card in your hand!");
@@ -58,7 +52,6 @@ public class CmdProg {
             System.out.println("Choose an attribute(damage,defense,intelligence).");
             System.out.println(player.getChosenCard().toString());
             String chosenAttributeAsString = scan.nextLine().toUpperCase();
-            Arrays.asList(CardAttribute.values()).contains(chosenAttributeAsString);
             while (!("DAMAGE,DEFENSE,INTELLIGENCE").contains(chosenAttributeAsString)) {
                 System.out.println("There's no such type");
                 chosenAttributeAsString = scan.nextLine().toUpperCase();
@@ -68,7 +61,7 @@ public class CmdProg {
 
         }
         else {
-            System.out.println("Choose a card,enter its name.");
+            System.out.println("\nChoose a card,enter its name.");
             String chosenCardAsString = scan.nextLine();
             while (!handContains(chosenCardAsString, player)) {
                 System.out.println("There's no such card in your hand!");
@@ -90,20 +83,23 @@ public class CmdProg {
                     spellName = scan.nextLine();
                 }
                 player.chooseCard(spellName);
+                player.getHand().remove(player.getChosenSpell());
                 try {
                     game.decideSpell(player.getChosenSpell());
+                    if(player.getChosenSpell().getEffect().equals("Revive")){
+                        System.out.println("You revived: "+game.getGraveyard().get(game.getGraveyard().size()-1).getName());
+                    }
                 } catch (NoManaException ex) {
                     System.out.println(ex.getMessage());
                 }
             }
         }
-        if (numberOfRound % 2 == 0) {
+        if (game.getNumberOfRound() % 2 == 0) {
             switchDefendingPlayer();
-        }
-        if (numberOfRound % 2 == 0) {
+            System.out.println("\n" + game.getPlayer1().getChosenCard().getName() + " VS "+game.getPlayer2().getChosenCard().getName());
             printWinner();
         }
-        switchPlayers();
+        game.switchPlayers();
     }
 
     public boolean handContains(String name, Player player) {
@@ -115,18 +111,17 @@ public class CmdProg {
         return false;
     }
 
-    public void switchDefendingPlayer() {
-            if(defendingPlayer.getName().equals(game.getPlayer1().getName())) {
-                defendingPlayer = game.getPlayer2();
-            }
-            else if (defendingPlayer.getName().equals(game.getPlayer2().getName())){
-                defendingPlayer = game.getPlayer1();
-            }
-    }
+   public void switchDefendingPlayer() {
+       if (defendingPlayer.getName().equals(game.getPlayer1().getName())) {
+           defendingPlayer = game.getPlayer2();
+       } else if (defendingPlayer.getName().equals(game.getPlayer2().getName())) {
+           defendingPlayer = game.getPlayer1();
+       }
+   }
 
     public void printWinner() {
         try {
-            Player roundWinner = game.getWinner();
+            Player roundWinner = game.getRoundWinner();
             System.out.println("This round's winner is: " + roundWinner.getName());
         } catch (RoundDrawException e) {
             System.out.println(e.getMessage());
@@ -135,16 +130,6 @@ public class CmdProg {
         }
     }
 
-    public void canPlay() {
-        if (game.getPlayer1().getHp() < 1 || game.getPlayer2().getHp() < 1) {
-            canPlay = false;
-            if (game.getPlayer1().getHp() > 1) {
-                winner = game.getPlayer1();
-            } else {
-                winner = game.getPlayer2();
-            }
-        }
-    }
 
     public void handlePlayerCreation() throws IOException {
         System.out.println("Enter name of player 1.");
@@ -158,6 +143,7 @@ public class CmdProg {
     }
 
     public void listCards(List<Card> cards) {
+        System.out.println("These cards are in your hand: ");
         for (Card card:cards) {
             System.out.println(card.toString());
         }
@@ -171,47 +157,9 @@ public class CmdProg {
         }
     }
 
-    public void checkHand(Player player) {
-        List<Card> hand = player.getHand();
-        while (hand.size() < 3) {
-            player.pickCard();
-        }
-        Boolean fighter = false;
-        for (Card card:player.getHand()) {
-            if (card instanceof FighterCard) {
-                fighter = true;
-            }
-        }
-        while (fighter.equals(false) && player.getDeck().size() != 0) {
-            player.pickCard();
-            for (Card card:hand) {
-                if (card instanceof FighterCard) {
-                    fighter = true;
-                }
-            }
-        }
-    }
 
     public void handleStatistics(Player player) {
-        System.out.println(player);
+        System.out.println(player + "\n\n");
     }
-
-    public void switchPlayers() {
-        Player player1 = game.getPlayer1();
-        Player player2 = game.getPlayer2();
-
-        if (game.getCurrentPlayer().getName().equals(player1.getName())) {
-            game.setCurrentPlayer(player2);
-            numberOfRound++;
-            System.out.println("Round of " + player2.getName());
-        }
-        else if (game.getCurrentPlayer().getName().equals(player2.getName())){
-            game.setCurrentPlayer(player1);
-            numberOfRound++;
-            System.out.println("Round of " + player1.getName());
-        }
-    }
-
-
 
 }
