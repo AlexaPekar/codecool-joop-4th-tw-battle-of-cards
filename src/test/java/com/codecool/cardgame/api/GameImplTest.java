@@ -22,8 +22,8 @@ class GameImplTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        player1 = new PlayerImpl("John");
-        player2 = new PlayerImpl("Lisa");
+        player1 = new PlayerImpl("John", "test.csv");
+        player2 = new PlayerImpl("Lisa", "test.csv");
         gameImpl.setPlayer1(player1);
         gameImpl.setPlayer2(player2);
 
@@ -56,7 +56,7 @@ class GameImplTest {
 
     @Test
     void setPlayer1() throws IOException {
-        gameImpl.setPlayer1(new PlayerImpl("Gideon"));
+        gameImpl.setPlayer1(new PlayerImpl("Gideon", "test.csv"));
         assertEquals("Gideon", gameImpl.getPlayer1().getName());
     }
 
@@ -65,7 +65,7 @@ class GameImplTest {
         System.out.println(currentPlayer.getDeck().get(0).getName());
         System.out.println(currentPlayer.getHand().get(1).getName());
 
-        gameImpl.setPlayer2(new PlayerImpl("Zsiga"));
+        gameImpl.setPlayer2(new PlayerImpl("Zsiga","test.csv"));
         assertEquals("Zsiga", gameImpl.getPlayer2().getName());
     }
 
