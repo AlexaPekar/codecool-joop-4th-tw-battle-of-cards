@@ -37,18 +37,18 @@ public class CmdProg {
             }
             getPlayerDecision();
         }
-        System.out.println("Congratulations " + winner.getName() + ", you won the game!");
+        System.out.println("\nCongratulations " + winner.getName() + ", you won the game!");
     }
 
     public void getPlayerDecision() {
         Player player = game.getCurrentPlayer();
-        System.out.println("Round of " + player.getName());
+        System.out.println("\nRound of " + player.getName());
         player.increaseMp(1);
         checkHand(player);
         handleStatistics(player);
         listCards(player.getHand());
         if (!defendingPlayer.getName().equals(player.getName())) {
-            System.out.println("Choose a card,enter its name.");
+            System.out.println("\nChoose a card,enter its name.");
             String chosenCardAsString = scan.nextLine();
             while (!handContains(chosenCardAsString, player)) {
                 System.out.println("There's no such card in your hand!");
@@ -67,7 +67,7 @@ public class CmdProg {
 
         }
         else {
-            System.out.println("Choose a card,enter its name.");
+            System.out.println("\nChoose a card,enter its name.");
             String chosenCardAsString = scan.nextLine();
             while (!handContains(chosenCardAsString, player)) {
                 System.out.println("There's no such card in your hand!");
@@ -101,7 +101,7 @@ public class CmdProg {
         }
         if (numberOfRound % 2 == 0) {
             switchDefendingPlayer();
-            System.out.println(game.getPlayer1().getChosenCard().getName() + " VS "+game.getPlayer2().getChosenCard().getName());
+            System.out.println("\n" + game.getPlayer1().getChosenCard().getName() + " VS "+game.getPlayer2().getChosenCard().getName());
             printWinner();
         }
         switchPlayers();
@@ -159,6 +159,7 @@ public class CmdProg {
     }
 
     public void listCards(List<Card> cards) {
+        System.out.println("These cards are in your hand: ");
         for (Card card:cards) {
             System.out.println(card.toString());
         }
@@ -194,7 +195,7 @@ public class CmdProg {
     }
 
     public void handleStatistics(Player player) {
-        System.out.println(player);
+        System.out.println(player + "\n\n");
     }
 
     public void switchPlayers() {
