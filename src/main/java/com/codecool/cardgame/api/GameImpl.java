@@ -123,6 +123,7 @@ public class GameImpl implements Game {
             } else if (spellCard.getEffect().equals("Revive")) {
                 spellCard.returnFromGraveyard(currentPlayer, graveyard);
             }
+            currentPlayer.decreaseMp(spellCard.getManaCost());
         } else {
             throw new NoManaException("Not enough mana!");
         }
