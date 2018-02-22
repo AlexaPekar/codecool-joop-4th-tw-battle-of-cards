@@ -17,17 +17,12 @@ public class PlayerImpl implements Player {
 
     public PlayerImpl(String name, String deckPath) throws IOException {
         hand = new ArrayList<>();
-        fillDeck();
-
-        pickCard();
-        pickCard();
-        pickCard();
-
+        this.deckPath = deckPath;
         this.name = name;
         chosenCard = null;
         this.hp = 10000;
         this.mp = 10;
-        this.deckPath = deckPath;
+        fillDeck();
     }
 
     public String getName() {
