@@ -133,6 +133,7 @@ public class CmdProg {
         }
         if (game.getNumberOfRound() % 2 == 0) {
             game.switchDefendingPlayer();
+            clearScreen();
             System.out.println("\n" + game.getPlayer1().getChosenCard().getName() + " VS "+game.getPlayer2().getChosenCard().getName());
             printWinner();
         }
