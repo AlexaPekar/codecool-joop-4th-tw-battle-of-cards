@@ -29,30 +29,37 @@ class CsvParserTest {
 
     @Test
     void getCardsFromCsv() throws IOException {
-        assertEquals(testDeck.get(0).getName(), csvParser.getCardsFromCsv("test.csv").get(0).getName());
-        assertEquals(testDeck.get(1).getName(), csvParser.getCardsFromCsv("test.csv").get(1).getName());
-        assertEquals(testDeck.get(2).getName(), csvParser.getCardsFromCsv("test.csv").get(2).getName());
-        assertEquals(testDeck.get(3).getName(), csvParser.getCardsFromCsv("test.csv").get(3).getName());
+        List<Card> cardsFromCsv = csvParser.getCardsFromCsv("test.csv");
+        assertEquals(testDeck.get(0).getName(), cardsFromCsv.get(0).getName());
+        assertEquals(testDeck.get(1).getName(), cardsFromCsv.get(1).getName());
+        assertEquals(testDeck.get(2).getName(), cardsFromCsv.get(2).getName());
+        assertEquals(testDeck.get(3).getName(), cardsFromCsv.get(3).getName());
 
-        assertEquals(testDeck.get(0).getType(), csvParser.getCardsFromCsv("test.csv").get(0).getType());
-        assertEquals(testDeck.get(1).getType(), csvParser.getCardsFromCsv("test.csv").get(1).getType());
-        assertEquals(testDeck.get(2).getType(), csvParser.getCardsFromCsv("test.csv").get(2).getType());
-        assertEquals(testDeck.get(3).getType(), csvParser.getCardsFromCsv("test.csv").get(3).getType());
+        assertEquals(testDeck.get(0).getType(), cardsFromCsv.get(0).getType());
+        assertEquals(testDeck.get(1).getType(), cardsFromCsv.get(1).getType());
+        assertEquals(testDeck.get(2).getType(), cardsFromCsv.get(2).getType());
+        assertEquals(testDeck.get(3).getType(), cardsFromCsv.get(3).getType());
 
-        assertEquals(((FighterCard)testDeck.get(0)).getDamage(), ((FighterCard)csvParser.getCardsFromCsv("test.csv").get(0)).getDamage());
-        assertEquals(((FighterCard)testDeck.get(1)).getDamage(), ((FighterCard)csvParser.getCardsFromCsv("test.csv").get(1)).getDamage());
+        FighterCard fighterCard1 = (FighterCard) testDeck.get(0);
+        FighterCard fighterCard2 = (FighterCard) testDeck.get(1);
 
-        assertEquals(((FighterCard)testDeck.get(0)).getDefense(), ((FighterCard)csvParser.getCardsFromCsv("test.csv").get(0)).getDefense());
-        assertEquals(((FighterCard)testDeck.get(1)).getDefense(), ((FighterCard)csvParser.getCardsFromCsv("test.csv").get(1)).getDefense());
+        assertEquals(fighterCard1.getDamage(), ((FighterCard) cardsFromCsv.get(0)).getDamage());
+        assertEquals(fighterCard2.getDamage(), ((FighterCard) cardsFromCsv.get(1)).getDamage());
 
-        assertEquals(((FighterCard)testDeck.get(0)).getIntelligence(), ((FighterCard)csvParser.getCardsFromCsv("test.csv").get(0)).getIntelligence());
-        assertEquals(((FighterCard)testDeck.get(1)).getIntelligence(), ((FighterCard)csvParser.getCardsFromCsv("test.csv").get(1)).getIntelligence());
+        assertEquals(fighterCard1.getDefense(), ((FighterCard) cardsFromCsv.get(0)).getDefense());
+        assertEquals(fighterCard2.getDefense(), ((FighterCard) cardsFromCsv.get(1)).getDefense());
 
-        assertEquals(((SpellCard)testDeck.get(2)).getEffect(), ((SpellCard)csvParser.getCardsFromCsv("test.csv").get(2)).getEffect());
-        assertEquals(((SpellCard)testDeck.get(3)).getEffect(), ((SpellCard)csvParser.getCardsFromCsv("test.csv").get(3)).getEffect());
+        assertEquals(fighterCard1.getIntelligence(), ((FighterCard) cardsFromCsv.get(0)).getIntelligence());
+        assertEquals(fighterCard2.getIntelligence(), ((FighterCard) cardsFromCsv.get(1)).getIntelligence());
 
-        assertEquals(((SpellCard)testDeck.get(2)).getManaCost(), ((SpellCard)csvParser.getCardsFromCsv("test.csv").get(2)).getManaCost());
-        assertEquals(((SpellCard)testDeck.get(3)).getManaCost(), ((SpellCard)csvParser.getCardsFromCsv("test.csv").get(3)).getManaCost());
+        SpellCard spellCard1 = (SpellCard) testDeck.get(2);
+        SpellCard spellCard2 = (SpellCard) testDeck.get(3);
+
+        assertEquals(spellCard1.getEffect(), ((SpellCard) cardsFromCsv.get(2)).getEffect());
+        assertEquals(spellCard2.getEffect(), ((SpellCard) cardsFromCsv.get(3)).getEffect());
+
+        assertEquals(spellCard1.getManaCost(), ((SpellCard) cardsFromCsv.get(2)).getManaCost());
+        assertEquals(spellCard2.getManaCost(), ((SpellCard) cardsFromCsv.get(3)).getManaCost());
 
 
 
