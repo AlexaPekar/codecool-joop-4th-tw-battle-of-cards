@@ -14,9 +14,15 @@ public class GameImpl implements Game {
     private String chosenAttribute;
     private Player currentPlayer;
     private List<Card> graveyard;
+    private int numberOfRound;
+    private Player winner;
+
+    private Player defendingPlayer;
 
     public GameImpl() {
         graveyard = new ArrayList<>();
+        numberOfRound = 1;
+        winner = null;
     }
 
     public Player getCurrentPlayer() {
@@ -58,7 +64,7 @@ public class GameImpl implements Game {
     }
 
     @Override
-    public Player getWinner() throws RoundDrawException, WrongInputException {
+    public Player getRoundWinner() throws RoundDrawException, WrongInputException {
         FighterCard player1Card = player1.getChosenCard();
         FighterCard player2Card = player2.getChosenCard();
         graveyard.add(player1Card);
@@ -139,5 +145,82 @@ public class GameImpl implements Game {
         return graveyard;
     }
 
+    public void switchPlayers() {
 
+        if (getCurrentPlayer().getName().equals(player1.getName())) {
+            setCurrentPlayer(player2);
+            numberOfRound++;
+        }
+        else if (getCurrentPlayer().getName().equals(player2.getName())){
+            setCurrentPlayer(player1);
+            numberOfRound++;
+        }
+    }
+    public void checkHand(Player player) {
+        List<Card> hand = player.getHand();
+        while (hand.size() < 3) {
+            player.pickCard();
+        }
+        Boolean fighter = false;
+        for (Card card:player.getHand()) {
+            if (card instanceof FighterCard) {
+                fighter = true;
+            }
+        }
+        while (fighter.equals(false) && player.getDeck().size() != 0) {
+            player.pickCard();
+            for (Card card:hand) {
+                if (card instanceof FighterCard) {
+                    fighter = true;
+                }
+            }
+        }
+    }
+
+    public int getNumberOfRound() {
+        return numberOfRound;
+    }
+    public boolean canPlay() {
+        if (player1.getHp() < 1 || player2.getHp() < 1) {
+            if (player1.getHp() > 1) {
+                winner = player1;
+            } else {
+                winner = player2;
+            }
+            return false;
+        }
+        return true;
+    }
+
+    public Player getDefendingPlayer() {
+        return defendingPlayer;
+    }
+    public void setDefendingPlayer(Player defendingPlayer) {
+        this.defendingPlayer = defendingPlayer;
+    }
+
+    public void switchDefendingPlayer() {
+        if (defendingPlayer.getName().equals(player1.getName())) {
+            defendingPlayer = player2;
+        } else if (defendingPlayer.getName().equals(player2.getName())) {
+            defendingPlayer = player1;
+        }
+    }
+
+    public boolean handContains(String name, Player player) {
+        for (int i = 0; i < player.getHand().size(); i++) {
+            if (player.getHand().get(i).getName().toLowerCase().equals(name.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
 }
