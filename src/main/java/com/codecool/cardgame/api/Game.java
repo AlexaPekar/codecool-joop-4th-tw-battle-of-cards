@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface Game {
 
+    Player getCurrentPlayer();
+    void setCurrentPlayer(Player player);
     Player getPlayer1();
     Player getPlayer2();
     String getChosenAttribute();

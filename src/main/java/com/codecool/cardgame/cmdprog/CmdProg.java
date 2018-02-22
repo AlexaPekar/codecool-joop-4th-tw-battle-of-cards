@@ -6,8 +6,14 @@ import com.codecool.cardgame.api.exception.RoundDrawException;
 import com.codecool.cardgame.api.exception.WrongInputException;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+
+import static java.lang.reflect.Array.*;
+import static java.util.Arrays.asList;
 
 public class CmdProg {
     private GameImpl game;
@@ -37,9 +43,7 @@ public class CmdProg {
 
     public void getPlayerDecision() {
         Player player = game.getCurrentPlayer();
-        if(player.getMp() < 10) {
-            player.increaseMp(1);
-        }
+        player.increaseMp(1);
         checkHand(player);
         handleStatistics(player);
         listCards(player.getHand());
@@ -54,8 +58,14 @@ public class CmdProg {
             System.out.println("Choose an attribute(damage,defense,intelligence).");
             System.out.println(player.getChosenCard().toString());
             String chosenAttributeAsString = scan.nextLine().toUpperCase();
+            Arrays.asList(CardAttribute.values()).contains(chosenAttributeAsString);
+            while (!("DAMAGE,DEFENSE,INTELLIGENCE").contains(chosenAttributeAsString)) {
+                System.out.println("There's no such type");
+                chosenAttributeAsString = scan.nextLine().toUpperCase();
+            }
             player.chooseAttribute(player.getChosenCard(), chosenAttributeAsString);
             game.setChosenAttribute(chosenAttributeAsString);
+
         }
         else {
             System.out.println("Choose a card,enter its name.");
