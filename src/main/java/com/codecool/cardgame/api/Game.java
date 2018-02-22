@@ -16,7 +16,7 @@ public interface Game {
     void setPlayer1(Player player);
     void setPlayer2(Player player);
     void setChosenAttribute(String attribute);
-    Player getWinner() throws RoundDrawException, WrongInputException;
+    Player getRoundWinner() throws RoundDrawException, WrongInputException;
     void decideSpell(SpellCard spellCard) throws NoManaException;
     boolean canUseSpell();
     void decreaseHP(Player player, int damage);
