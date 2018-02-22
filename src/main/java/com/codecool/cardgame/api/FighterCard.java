@@ -5,7 +5,7 @@ public class FighterCard extends Card {
     private int damage;
     private int defense;
 
-    public FighterCard(String name,String type, int intelligence, int damage, int defense) {
+    public FighterCard(String name,String type, int damage, int defense, int intelligence) {
         super(name,type);
         this.intelligence = intelligence;
         this.damage = damage;

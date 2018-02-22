@@ -1,16 +1,30 @@
-Xardas,Fighter,50,40,60
-Dumbledore,Fighter,89,45,90
-Radagast,Fighter,25,30,35
-Saruman,Fighter,75,50,45
-Gandalf the grey,Fighter,55,30,45
-Gandalf the white,Fighter,90,45,69
-PistaBátya,Fighter,60,50,34
-Leslie the black magician,Fighter,70,40,65
+Xardas,Fighter,900,40,60
+Dumbledore,Fighter,1400,45,90
+Radagast,Fighter,1000,30,35
+Saruman,Fighter,1200,50,45
+Gandalf the grey,Fighter,1300,30,45
+Gandalf the white,Fighter,2000,45,69
+PistaBátya,Fighter,2500,50,34
+Leslie the black magician,Fighter,3000,40,65
 Medical Sausage,Spell,Increase HP,3
 Sauron's eye,Spell,Increase Damage,4
-Invisibility jacket,Spell,Increse Defense,2
+Invisibility jacket,Spell,Increase Defense,2
 Magic mushroom,Spell,Increase HP,5
 Magic bean,Spell,Increase Damage,4
 Magic Aura,Spell,Increase Defense,6
 Liquid Luck,Spell,Increase Intelligence,7
 Elder Wand,Spell,Increase Intelligence,8
+Holy Card,Spell,Revive,9
+Zombie Fighter,Spell,Revive,9
+Dobby,Fighter,700,60,60
+Merlin,Fighter,1600,90,90
+Xomimaex,Fighter,900,72,50
+Kekuvius,Fighter,1000,65,77
+Krofarihm,Fighter,1200,55,90
+Curius,Fighter,650,40,52
+Daryydor,Fighter,1350,60,60
+Oplucuxon,Fighter,1200,90,85
+Gluzif,Fighter,750,60,75
+Zypan,Fighter,999,50,50
+Idras,Fighter,1150,60,30
+Idquam,Fighter,1400,50,75
