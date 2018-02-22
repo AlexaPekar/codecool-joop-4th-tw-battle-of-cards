@@ -37,8 +37,8 @@ public class SpellCard extends Card {
     }
 
     public void returnFromGraveyard(Player player, List<Card> graveYard) {
-        player.getHand().add(graveYard.get(0));
-        graveYard.remove(graveYard.get(0));
+        player.getHand().add(graveYard.get(graveYard.size()-1));
+        graveYard.remove(graveYard.get(graveYard.size()-1));
 
     }
 
