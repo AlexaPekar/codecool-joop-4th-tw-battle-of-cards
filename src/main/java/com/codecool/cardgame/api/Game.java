@@ -9,7 +9,7 @@ import java.util.List;
 public interface Game {
 
     Player getCurrentPlayer();
-    Player setCurrentPlayer(Player player);
+    void setCurrentPlayer(Player player);
     Player getPlayer1();
     Player getPlayer2();
     String getChosenAttribute();
