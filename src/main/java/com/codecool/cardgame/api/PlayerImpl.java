@@ -70,6 +70,9 @@ public class PlayerImpl implements Player {
     @Override
     public void increaseMp(int mp) {
         this.mp += mp;
+        if (this.mp > 10) {
+            this.mp = 10;
+        }
     }
 
     @Override
