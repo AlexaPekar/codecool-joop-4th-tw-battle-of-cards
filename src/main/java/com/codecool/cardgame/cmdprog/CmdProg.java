@@ -5,8 +5,6 @@ import com.codecool.cardgame.api.exception.NoManaException;
 import com.codecool.cardgame.api.exception.RoundDrawException;
 import com.codecool.cardgame.api.exception.WrongInputException;
 
-import javax.swing.*;
-import javax.swing.text.StyledEditorKit;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -141,11 +139,11 @@ public class CmdProg {
     public void handlePlayerCreation() throws IOException {
         System.out.println("Enter name of player 1.");
         String nameP1 = scan.nextLine();
-        Player player1 = new PlayerImpl(nameP1);
+        Player player1 = new PlayerImpl(nameP1,"cards.csv");
         game.setPlayer1(player1);
         System.out.println("Enter name of player 2.");
         String nameP2 = scan.nextLine();
-        Player player2 = new PlayerImpl(nameP2);
+        Player player2 = new PlayerImpl(nameP2,"cards.csv");
         game.setPlayer2(player2);
     }
 

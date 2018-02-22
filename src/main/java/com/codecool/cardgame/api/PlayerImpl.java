@@ -13,8 +13,9 @@ public class PlayerImpl implements Player {
     private SpellCard chosenSpell;
     private int hp;
     private int mp;
+    private String deckPath;
 
-    public PlayerImpl(String name) throws IOException {
+    public PlayerImpl(String name, String deckPath) throws IOException {
         hand = new ArrayList<>();
         fillDeck();
 
@@ -26,6 +27,7 @@ public class PlayerImpl implements Player {
         chosenCard = null;
         this.hp = 10000;
         this.mp = 10;
+        this.deckPath = deckPath;
     }
 
     public String getName() {
@@ -126,7 +128,7 @@ public class PlayerImpl implements Player {
 
     public void fillDeck() throws IOException {
         CsvParser csvParser = new CsvParser();
-        deck = csvParser.getCardsFromCsv("cards.csv");
+        deck = csvParser.getCardsFromCsv(deckPath);
         Collections.shuffle(deck);
 
 
