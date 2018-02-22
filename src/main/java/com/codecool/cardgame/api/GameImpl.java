@@ -223,4 +223,13 @@ public class GameImpl implements Game {
     public void setWinner(Player winner) {
         this.winner = winner;
     }
+
+    public Card getCardByName(String name) {
+        for (Card card:currentPlayer.getHand()) {
+            if (name.toLowerCase().equals(card.getName().toLowerCase())) {
+                return card;
+            }
+        }
+        return null;
+    }
 }
